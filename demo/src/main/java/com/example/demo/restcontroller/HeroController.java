@@ -18,7 +18,7 @@ public class HeroController {
   }
 
   @CrossOrigin(origins = "http://localhost:4200")
-  @GetMapping("/heroes/{id}")
+  @GetMapping("/heroes/id/{id}")
   public Hero getHeroById(@PathVariable("id") Long id)
   {
    return heroService.getHeroById(id);
@@ -32,17 +32,16 @@ public class HeroController {
 
   @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/heroes/{name}")
-  public Hero getHeroByName(@PathVariable("name") String name)
+  public List<Hero> getHeroByName(@PathVariable("name") String name)
   {
-    System.out.println("istek geldi");
+    System.out.println("controller");
     return heroService.getHeroByName(name);
   }
 
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/heroes")
-  public void addNewHero(@RequestBody @NonNull Hero hero)
-  {
-    heroService.addNewHero(hero);
+  public Hero addNewHero(@RequestBody @NonNull Hero hero) {
+    return heroService.addNewHero(hero);
   }
 
   @CrossOrigin(origins = "http://localhost:4200")
