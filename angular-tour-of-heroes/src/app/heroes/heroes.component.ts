@@ -1,22 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.css']
+  styleUrls: ['./heroes.component.css'],
 })
 
 export class HeroesComponent implements OnInit {
 
+  counter: number = 0;
   heroes: Hero[] = [];
+  //timer: String[] = [];
+  @Output() myOutputName = new EventEmitter();
+
 
   constructor(private heroService: HeroService) {}
 
   ngOnInit() {
     this.getHeroes();
   }
+
+  ngOnChanges(){
+    console.log("..");
+  }
+
+
 
   getHeroes(): void {
     this.heroService.getHeroes()
@@ -30,7 +40,9 @@ export class HeroesComponent implements OnInit {
     if (!name) { return; }
     this.heroService.addHero({ name } as Hero)
       .subscribe(hero => {
+        console.log("Hero= ", hero);
         this.heroes.push(hero);
+        // this.ngOnInit();
       });
   }
   delete(hero: Hero): void {

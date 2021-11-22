@@ -6,11 +6,11 @@ public interface IHeroService {
 
    Hero getHeroById(Long id);
 
-   Hero getHeroByName(String name);
+   List<Hero> getHeroByName(String name);
 
    List<Hero> getAllHeroes();
 
-   void addNewHero(Hero hero);
+   Hero addNewHero(Hero hero);
 
    void deleteHero(Long id);
 
