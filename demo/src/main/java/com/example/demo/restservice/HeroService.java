@@ -3,6 +3,7 @@ package com.example.demo.restservice;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HeroService implements IHeroService{
@@ -32,15 +33,15 @@ public class HeroService implements IHeroService{
   }
 
   @Override
-  public Hero getHeroByName(String name) {
-    for (Hero hero : heroes) {
-      System.out.println("get hero by name");
-      if (hero.getName().equals(name)) {
-        System.out.println("eşleşti");
-        return hero;
+  public List<Hero> getHeroByName(String name) {
+    List<Hero> filteredHeroes = new ArrayList<>();
+
+    for(Hero hero: heroes){
+      if(hero.getName().contains(name)){
+        filteredHeroes.add(hero);
       }
     }
-    return null;
+    return filteredHeroes;
   }
 
 
@@ -50,19 +51,22 @@ public class HeroService implements IHeroService{
   }
 
   @Override
-  public void addNewHero(Hero hero) {
+  public Hero addNewHero(Hero hero) {
 
     //hero.setId(hero.getId() == 0 ? heroes.size()+11 : hero.getId());
     hero.setId(heroes.get(heroes.size()-1).getId()+1);
     heroes.add(hero);
+    return hero;
   }
 
   @Override
   public void deleteHero(Long id) {
+    Hero deletedHero=null;
     for (Hero hero : heroes) {
       if (hero.getId() == id)
-        heroes.remove(heroes.indexOf(hero));
+        deletedHero = hero;
     }
+    heroes.remove(deletedHero);
   }
 
   @Override
